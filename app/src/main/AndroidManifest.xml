@@ -21,6 +21,12 @@
         android:theme="@style/Theme.UITime"
         tools:targetApi="31">
         <activity
+            android:name=".MoodRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangeNicknameActivity"
             android:exported="false" />
         <activity
