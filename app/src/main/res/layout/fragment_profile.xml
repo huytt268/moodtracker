@@ -73,22 +73,24 @@
                         android:textColor="@color/black"
                         android:textSize="18dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#7753"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:textSize="18dp"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="#7753"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="8dp"-->
+<!--                        android:textSize="18dp"/>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <Button
+                            android:id="@+id/btn_openChange_Nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
+                            android:layout_marginRight="5dp"
                             android:text="Edit"
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -122,21 +124,6 @@
                         android:layout_gravity="center"
                         android:textColor="@color/black"
                         android:textSize="18dp"/>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="Edit"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-
-
                 </LinearLayout>
             </LinearLayout>
 
@@ -179,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
+                            android:id="@+id/txt_totaldays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4"
@@ -217,6 +205,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
+                            android:id="@+id/txt_totalpics"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4"
@@ -232,6 +221,7 @@
 
         </LinearLayout>
         <Button
+            android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log out"
