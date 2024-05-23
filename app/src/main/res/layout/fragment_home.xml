@@ -13,6 +13,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
         <Button
+            android:id="@+id/previousMonthBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -20,7 +21,6 @@
             android:textColor="@color/primary"
             android:background="@null"
             android:textStyle="bold"
-            android:onClick="previousMonthAction"
             android:textSize="20sp"/>
 
         <TextView
@@ -34,6 +34,7 @@
             android:textColor="@color/black"/>
 
         <Button
+            android:id="@+id/nextMonthBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +42,6 @@
             android:textColor="@color/primary"
             android:background="@null"
             android:textStyle="bold"
-            android:onClick="nextMonthAction"
             android:textSize="20sp"/>
 
     </LinearLayout>

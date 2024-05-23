@@ -23,9 +23,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.hfad.uitime.CalendarFragment;
 import com.hfad.uitime.HomeFragment;
-import com.hfad.uitime.PomodoroFragment;
+import com.hfad.uitime.ChartFragment;
 import com.hfad.uitime.ProfileFragment;
 import com.hfad.uitime.R;
 
@@ -74,10 +73,8 @@ public class TodoListActivity extends AppCompatActivity {
 
                 if(itemId == R.id.navigation_home) {
                     loadFragment(new HomeFragment(), false);
-                } else if (itemId == R.id.navigation_calendar) {
-                    loadFragment(new CalendarFragment(), false);
-                } else if (itemId == R.id.navigation_pomodoro) {
-                    loadFragment(new PomodoroFragment(), false);
+                } else if (itemId == R.id.navigation_chart) {
+                    loadFragment(new ChartFragment(), false);
                 } else { //nav Profile
                     Bundle bundle = new Bundle();
                     int idUser = 2;

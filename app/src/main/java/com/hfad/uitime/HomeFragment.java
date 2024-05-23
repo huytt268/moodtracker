@@ -72,8 +72,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +79,24 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView);
         monthYearText = view.findViewById(R.id.monthYearTV);
         selectedDate = LocalDate.now();
+
+        Button previousMonth = view.findViewById(R.id.previousMonthBtn);
+        Button nextMonth = view.findViewById(R.id.nextMonthBtn);
+
+        previousMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                previousMonthAction(v);
+            }
+        });
+
+        nextMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextMonthAction(v);
+            }
+        });
+
         setMonthView();
         return view;
     }
@@ -91,7 +107,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 7);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
@@ -126,8 +142,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         return date.format(formatter);
     }
 
-    public void previousMonthAction(View view)
-    {
+
+    public void previousMonthAction(View view) {
         selectedDate = selectedDate.minusMonths(1);
         setMonthView();
     }
@@ -147,4 +163,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 //            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
     }
+
+
 }
