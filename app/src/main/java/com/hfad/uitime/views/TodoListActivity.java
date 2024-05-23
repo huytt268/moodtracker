@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,10 +29,17 @@ import com.hfad.uitime.PomodoroFragment;
 import com.hfad.uitime.ProfileFragment;
 import com.hfad.uitime.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 
 public class TodoListActivity extends AppCompatActivity {
-
+    private static SQLiteDatabase database;
+    private String DB_PATH_SUFFIX = "/databases/";
+    private  String DATABASE_NAME="DoAnDatabase.db";
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
     private static final int RC_NOTIFICATION = 1;
@@ -46,6 +54,9 @@ public class TodoListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        processCopy();
+        database = openOrCreateDatabase("DoAnDatabase.db",MODE_PRIVATE,null);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
@@ -68,7 +79,12 @@ public class TodoListActivity extends AppCompatActivity {
                 } else if (itemId == R.id.navigation_pomodoro) {
                     loadFragment(new PomodoroFragment(), false);
                 } else { //nav Profile
-                    loadFragment(new ProfileFragment(), false);
+                    Bundle bundle = new Bundle();
+                    int idUser = 2;
+                    bundle.putInt("idUser", idUser );
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    profileFragment.setArguments(bundle);
+                    loadFragment(profileFragment, false);
                 }
 
                 return true;
@@ -117,5 +133,54 @@ public class TodoListActivity extends AppCompatActivity {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, pendingIntent);
         }
+    }
+    //3 hàm copy database từ thư muc assets
+    private void processCopy() {
+//private app
+        File dbFile = getDatabasePath(DATABASE_NAME);
+        if (!dbFile.exists())
+        {
+            try{CopyDataBaseFromAsset();
+                Toast.makeText(this, "Copying sucess from Assets folder",
+                        Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e){
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getDatabasePath() {
+        return getApplicationInfo().dataDir + DB_PATH_SUFFIX+ DATABASE_NAME;
+    }
+    public void CopyDataBaseFromAsset() {
+// TODO Auto-generated method stub
+        try {
+            InputStream myInput;
+            myInput = getAssets().open(DATABASE_NAME);
+// Path to the just created empty db
+            String outFileName = getDatabasePath();
+// if the path doesn't exist first, create it
+            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+            if (!f.exists())
+                f.mkdir();
+// Open the empty db as the output stream
+            OutputStream myOutput = new FileOutputStream(outFileName);
+// transfer bytes from the inputfile to the outputfile
+// Truyền bytes dữ liệu từ input đến output
+            int size = myInput.available();
+            byte[] buffer = new byte[size];
+            myInput.read(buffer);
+            myOutput.write(buffer);
+// Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+        } catch (IOException e) {
+// TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public static SQLiteDatabase getDatabase() {
+        return database;
     }
 }

@@ -1,12 +1,20 @@
 package com.hfad.uitime;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.hfad.uitime.views.TodoListActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,15 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    //khai báo biến xml
+    private Button btn_openChange_Nickname, btn_logout;
+    private TextView txt_username, txt_email, txt_totaldays, txt_totalpics;
+    //khai báo biến lưu mã code
+    private static final int UPDATE_USERNAME_REQUEST = 26;
+    private static final int UPDATE_USERNAME_SUCCESS = 200;
+
+    private SQLiteDatabase db;
+    private int idUser;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,6 +76,55 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View profileview = inflater.inflate(R.layout.fragment_profile, container, false);
+        db = TodoListActivity.getDatabase();
+        idUser = this.getArguments().getInt("idUser");
+        //kết nối với xml
+        btn_openChange_Nickname = (Button) profileview.findViewById(R.id.btn_openChange_Nickname);
+        btn_logout = (Button) profileview.findViewById(R.id.btn_logout);
+        txt_username = (TextView) profileview.findViewById(R.id.txt_username);
+        txt_email = (TextView) profileview.findViewById(R.id.txt_email);
+        txt_totaldays = (TextView) profileview.findViewById(R.id.txt_totaldays);
+        txt_totalpics = (TextView) profileview.findViewById(R.id.txt_totalpics);
+        //hiển thi thông tin user
+        Cursor getUser = db.query("User", null,  "idUser = ?", new String[]{String.valueOf(idUser)},
+                null, null, null);
+        if (getUser != null) {
+            getUser.moveToFirst();
+        }
+        txt_username.setText(getUser.getString(1));
+        txt_email.setText(getUser.getString(2));
+        //Hiển thị tổng ngày đã viết nhật kí
+        Cursor countDays = db.rawQuery("SELECT COUNT(*) FROM Day WHERE idUser = '" + idUser + "'",null);
+        countDays.moveToFirst();
+        txt_totaldays.setText(String.valueOf(countDays.getInt(0)));
+        countDays.close();
+
+        //Event listener
+        btn_openChange_Nickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleChangeNickname();
+            }
+        });
+
+
+        return profileview;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPDATE_USERNAME_REQUEST && resultCode == UPDATE_USERNAME_SUCCESS) {
+            String newNickname = data.getStringExtra("newNickname");
+            txt_username.setText(newNickname);
+        }
+    }
+
+    private void handleChangeNickname() {
+        Intent intent = new Intent(getActivity(),ChangeNicknameActivity.class);
+        intent.putExtra("idUser", 2);
+        intent.putExtra("username", txt_username.getText());
+        startActivityForResult(intent, UPDATE_USERNAME_REQUEST);
     }
 }
