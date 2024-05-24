@@ -49,7 +49,7 @@ public class PomodoroFragment extends Fragment {
     private ImageView back_arrow;
     private SQLiteDatabase db;
 
-    private int idUser;
+    private int idUser = this.getArguments().getInt("idUser");
 
     public PomodoroFragment() {
         // Required empty public constructor
@@ -95,7 +95,6 @@ public class PomodoroFragment extends Fragment {
         moodentry = chartview.findViewById(R.id.moodentry);
         //lấy database
         db = TodoListActivity.getDatabase();
-        idUser = this.getArguments().getInt("idUser");
 
 
         xValues = Arrays.asList("1/5","11/5","21/5","31/5");
