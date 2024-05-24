@@ -85,15 +85,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int itemId = menuItem.getItemId();
+                Bundle bundle = new Bundle();
+                int idUser = 2;
+                bundle.putInt("idUser", idUser );
 
                 if(itemId == R.id.navigation_home) {
                     loadFragment(new HomeFragment(), false);
                 } else if (itemId == R.id.navigation_chart) {
                     loadFragment(new ChartFragment(), false);
+                } else if (itemId == R.id.navigation_calendar) {
+                    loadFragment(new CalendarFragment(), false);
+                } else if (itemId == R.id.navigation_pomodoro) {
+                    PomodoroFragment pomodoroFragment = new PomodoroFragment();
+                    pomodoroFragment.setArguments(bundle);
+                    loadFragment(pomodoroFragment, false);
                 } else { //nav Profile
-                    Bundle bundle = new Bundle();
-                    int idUser = 2;
-                    bundle.putInt("idUser", idUser );
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setArguments(bundle);
                     loadFragment(profileFragment, false);
