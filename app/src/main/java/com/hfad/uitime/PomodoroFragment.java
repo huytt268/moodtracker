@@ -1,8 +1,10 @@
 package com.hfad.uitime;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -81,50 +83,73 @@ public class PomodoroFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View chartview  = inflater.inflate(R.layout.fragment_pomodoro, container, false);
+        View chartview = inflater.inflate(R.layout.fragment_pomodoro, container, false);
         lineChart = chartview.findViewById(R.id.chart);
+
         Description description = new Description();
         description.setText("Mood Flow");
         description.setPosition(150f, 15f);
         lineChart.setDescription(description);
+
         moodentry = chartview.findViewById(R.id.moodentry);
-        //lấy database
-        db = TodoListActivity.getDatabase();
 
+        // Get database
+        SQLiteDatabase db = TodoListActivity.getDatabase();
 
-        xValues = Arrays.asList("1/5","11/5","21/5","31/5");
+        // Get idUser
+        int idUser = getArguments().getInt("idUser");
 
+        // Query database
+        Cursor cursor = db.rawQuery("SELECT date, overallEmo FROM YourTableName WHERE idUser = ?", new String[]{String.valueOf(idUser)});
+        ArrayList<String> xValues = new ArrayList<>();
+        ArrayList<Entry> entries = new ArrayList<>();
+        if (cursor != null) {
+            int index = 0;
+            while (cursor.moveToNext()) {
+                int dateIndex = cursor.getColumnIndex("date");
+                int overallEmoIndex = cursor.getColumnIndex("overallEmo");
+
+                if (dateIndex != -1 && overallEmoIndex != -1) {
+                    String date = cursor.getString(dateIndex);
+                    int overallEmo = cursor.getInt(overallEmoIndex);
+                    xValues.add(date);
+                    entries.add(new Entry(index, overallEmo)); // Assuming overallEmo is float or int
+                    index++;
+                }
+            }
+            cursor.close();
+        }
+
+        // Setup XAxis
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));
-        xAxis.setLabelCount(4);
+        xAxis.setLabelCount(xValues.size());
         xAxis.setGranularity(1f);
 
+        // Setup YAxis
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(180f);
+        yAxis.setAxisMaximum(180f); // Adjust as per your requirements
         yAxis.setAxisLineWidth(2f);
-        yAxis.setAxisLineColor(android.R.color.holo_green_light);
+        yAxis.setAxisLineColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_light));
         yAxis.setLabelCount(5);
 
-        List<Entry> entries1 = new ArrayList<>();
-        entries1.add(new Entry(0,10f));
-        entries1.add(new Entry(1,10f));
-        entries1.add(new Entry(2,15f));
-        entries1.add(new Entry(3,45f));
+        // Create dataset
+        LineDataSet dataSet1 = new LineDataSet(entries, "Overall Emotion");
+        dataSet1.setColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_light));
 
-        LineDataSet dataSet1 = new LineDataSet(entries1, "Good");
-        dataSet1.setColor(android.R.color.holo_green_light);
-
+        // Set data to chart
         LineData lineData = new LineData(dataSet1);
         lineChart.setData(lineData);
         lineChart.invalidate();
 
         return chartview;
     }
+
+
 }
