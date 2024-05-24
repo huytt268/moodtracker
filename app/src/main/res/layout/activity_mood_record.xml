@@ -180,9 +180,7 @@
                         android:scaleType="centerInside"/>
                 </LinearLayout>
 
-
-            </LinearLayout>
-
+    </LinearLayout>
 
             <Button
                 android:id="@+id/btn_donerecord"
@@ -195,14 +193,9 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/black"
-                app:backgroundTint="@color/background"
-                android:layout_marginBottom="26dp"/>
-
-
+                app:backgroundTint="@color/background" />
         </LinearLayout>
     </ScrollView>
-
-
 
 
 </LinearLayout>

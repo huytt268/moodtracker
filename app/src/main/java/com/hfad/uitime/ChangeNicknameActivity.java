@@ -14,11 +14,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.hfad.uitime.views.TodoListActivity;
+import com.hfad.uitime.views.MainActivity;
 
 public class ChangeNicknameActivity extends AppCompatActivity {
     private Button changeNickname;
@@ -34,7 +31,7 @@ public class ChangeNicknameActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_change_nickname);
 
-        db = TodoListActivity.getDatabase();
+        db = MainActivity.getDatabase();
 
         String username = "";
         et_nickname = findViewById(R.id.et_nickname);

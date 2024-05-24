@@ -24,13 +24,10 @@
             android:name=".MoodRecordActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".ChangeNicknameActivity"
             android:exported="false" />
         <activity
-            android:name=".views.TodoListActivity"
+            android:name=".views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

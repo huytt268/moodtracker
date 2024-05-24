@@ -22,7 +22,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.hfad.uitime.views.TodoListActivity;
+import com.hfad.uitime.views.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +97,7 @@ public class ChartFragment extends Fragment {
         back_arrow = view.findViewById(R.id.back_mood);
         moodentry = view.findViewById(R.id.moodentry);
         btn_donerecord = view.findViewById(R.id.btn_donerecord);
-        db = TodoListActivity.getDatabase();
+        db = MainActivity.getDatabase();
 
         btn_donerecord.setOnClickListener(new View.OnClickListener() {
             @Override

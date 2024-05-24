@@ -39,7 +39,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
 
-public class TodoListActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private static SQLiteDatabase database;
     private String DB_PATH_SUFFIX = "/databases/";
     private  String DATABASE_NAME="DoAnDatabase.db";
@@ -53,7 +53,7 @@ public class TodoListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_todo_list);
+        setContentView(R.layout.main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.todo_list_view), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -74,7 +74,7 @@ public class TodoListActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TodoListActivity.this, MoodRecordActivity.class);
+                Intent intent = new Intent(MainActivity.this, MoodRecordActivity.class);
                 intent.putExtra("idUser", 2);
                 startActivityForResult(intent, MOOD_RECORD_REQUEST);
             }
@@ -98,8 +98,16 @@ public class TodoListActivity extends AppCompatActivity {
                     profileFragment.setArguments(bundle);
                     loadFragment(profileFragment, false);
                 }
-
                 return true;
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MoodRecordActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -138,7 +140,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     private String monthYearFromDate(LocalDate date)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.ENGLISH);
         return date.format(formatter);
     }
 
@@ -155,14 +157,10 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     }
 
     @Override
-    public void onItemClick(int position, String dayText)
-    {
+    public void onItemClick(int position, String dayText, Drawable dayIcon) {
         if(!dayText.equals(""))
         {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-//            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         }
     }
-
-
 }

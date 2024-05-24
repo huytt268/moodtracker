@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.hfad.uitime.views.TodoListActivity;
+import com.hfad.uitime.views.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View profileview = inflater.inflate(R.layout.fragment_profile, container, false);
-        db = TodoListActivity.getDatabase();
+        db = MainActivity.getDatabase();
         idUser = this.getArguments().getInt("idUser");
         //kết nối với xml
         btn_openChange_Nickname = (Button) profileview.findViewById(R.id.btn_openChange_Nickname);

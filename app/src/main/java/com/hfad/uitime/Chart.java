@@ -8,8 +8,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.hfad.uitime.R;
-import com.hfad.uitime.views.TodoListActivity;
+import com.hfad.uitime.views.MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,7 +46,7 @@ public class Chart extends AppCompatActivity {
         back_arrow = findViewById(R.id.back_mood);
         moodentry = findViewById(R.id.moodentry);
         btn_donerecord = findViewById(R.id.btn_donerecord);
-        db = TodoListActivity.getDatabase();
+        db = MainActivity.getDatabase();
 
         btn_donerecord.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,11 +23,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.hfad.uitime.views.TodoListActivity;
+import com.hfad.uitime.views.MainActivity;
+
+import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MoodRecordActivity extends AppCompatActivity {
     private ImageView back_arrow, iv_todayimage;
@@ -47,6 +50,13 @@ public class MoodRecordActivity extends AppCompatActivity {
         back_arrow = findViewById(R.id.back_mood);
         iv_todayimage = findViewById(R.id.iv_todayimage);
         txt_dayrecord = findViewById(R.id.txt_dayrecord);
+
+        long value = getIntent().getLongExtra("selected_day", 0);
+        Date currentDate = (value == 0? new Date() : new Date(value));
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd'th' yyyy", Locale.US);
+        String formattedDate = format.format(currentDate);
+        txt_dayrecord.setText(formattedDate);
+
         et_note = findViewById(R.id.et_note);
         btn_donerecord = findViewById(R.id.btn_donerecord);
         btn_addimage = findViewById(R.id.btn_addimage);
@@ -56,7 +66,7 @@ public class MoodRecordActivity extends AppCompatActivity {
         mood_3 = findViewById(R.id.mood_3);
         mood_4 = findViewById(R.id.mood_4);
         mood_5 = findViewById(R.id.mood_5);
-        db = TodoListActivity.getDatabase();
+        db = MainActivity.getDatabase();
 
         registerResult();
 
