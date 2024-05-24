@@ -24,9 +24,6 @@
             android:name=".MoodRecordActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".ChangeNicknameActivity"
             android:exported="false" />
         <activity
