@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
 
     private void handleChangeNickname() {
         Intent intent = new Intent(getActivity(),ChangeNicknameActivity.class);
-        intent.putExtra("idUser", 2);
+        intent.putExtra("idUser", idUser);
         intent.putExtra("username", txt_username.getText());
         startActivityForResult(intent, UPDATE_USERNAME_REQUEST);
     }

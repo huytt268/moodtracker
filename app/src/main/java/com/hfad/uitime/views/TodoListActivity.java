@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -23,8 +24,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hfad.uitime.ChangeNicknameActivity;
 import com.hfad.uitime.HomeFragment;
 import com.hfad.uitime.ChartFragment;
+import com.hfad.uitime.MoodRecordActivity;
 import com.hfad.uitime.ProfileFragment;
 import com.hfad.uitime.R;
 
@@ -40,8 +44,10 @@ public class TodoListActivity extends AppCompatActivity {
     private String DB_PATH_SUFFIX = "/databases/";
     private  String DATABASE_NAME="DoAnDatabase.db";
     private BottomNavigationView bottomNavigationView;
+    private FloatingActionButton floatingActionButton;
     private FrameLayout frameLayout;
     private static final int RC_NOTIFICATION = 1;
+    private int MOOD_RECORD_REQUEST = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,15 @@ public class TodoListActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         frameLayout = findViewById(R.id.framelayout);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TodoListActivity.this, MoodRecordActivity.class);
+                intent.putExtra("idUser", 2);
+                startActivityForResult(intent, MOOD_RECORD_REQUEST);
+            }
+        });
 
         //xử lí sự kiện nhấn vào các nút trong bottom bar
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
