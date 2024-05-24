@@ -4,11 +4,13 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +34,9 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,8 +103,40 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             }
         });
 
+
+
         setMonthView();
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10 && resultCode == 200) {
+            Date date = new Date(data.getLongExtra("date", 0));
+            int overallEmo = data.getIntExtra("overallEmo", 0);
+
+            ImageButton dayIcon = Objects.requireNonNull(calendarRecyclerView.findViewHolderForAdapterPosition(date.getDate())).itemView.findViewById(R.id.cellDayBtn);
+            dayIcon.setImageResource(getIconResId(overallEmo));
+        }
+    }
+
+    private int getIconResId(int emotion) {
+        // Replace this with your own logic to map emotions to icons
+        switch (emotion) {
+            case 1:
+                return R.drawable.mood_1_checked;
+            case 2:
+                return R.drawable.mood_2_checked;
+            case 3:
+                return R.drawable.mood_3_checked;
+            case 4:
+                return R.drawable.mood_4_checked;
+            case 5:
+                return R.drawable.mood_5_checked;
+            default:
+                return R.drawable.ic_add_item;
+        }
     }
 
     private void setMonthView()

@@ -2,6 +2,7 @@ package com.hfad.uitime;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ public class MoodRecordActivity extends AppCompatActivity {
     private RadioButton mood_1, mood_2, mood_3, mood_4, mood_5;
     private ActivityResultLauncher<Intent> resultLauncher;
     private SQLiteDatabase db;
+    int overallEmo;
+    boolean isRecored = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,31 @@ public class MoodRecordActivity extends AppCompatActivity {
 
         registerResult();
 
+//        Cursor getDay = db.query("Day", null,  "date = ?", new String[]{String.valueOf(value)},
+//                null, null, null);
+//        if (getDay != null) {
+//            getDay.moveToLast();
+//            et_note.setText(getDay.getString(4));
+//            overallEmo = getDay.getInt(3);
+//            isRecored = true;
+//            switch (overallEmo) {
+//                case 1:
+//                    mood_1.setChecked(true);
+//                    break;
+//                case 2:
+//                    mood_2.setChecked(true);
+//                    break;
+//                case 3:
+//                    mood_3.setChecked(true);
+//                    break;
+//                case 4:
+//                    mood_4.setChecked(true);
+//                    break;
+//                default:
+//                    mood_5.setChecked(true);
+//            }
+//        }
+
         btn_addimage.setOnClickListener(v -> pickImage());
 
         btn_donerecord.setOnClickListener(new View.OnClickListener() {
@@ -85,18 +113,23 @@ public class MoodRecordActivity extends AppCompatActivity {
                 else overallEmo = 5;
                 ContentValues insertDay = new ContentValues();
                 insertDay.put("idUser", idUser);
-                insertDay.put("date", 24);
+                insertDay.put("date", value);
                 insertDay.put("overallEmo", overallEmo);
                 insertDay.put("note", note);
                 insertDay.putNull("image");
-
                 String result = "";
                 if(db.insert("Day", null, insertDay) == -1) {
                     result = "Some thing wrong";
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 } else {
                     result = "Recorded succesfully!";
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                    Intent resutIntent = new Intent();
+                    resutIntent.putExtra("overallEmo", overallEmo);
+                    resutIntent.putExtra("date", value);
+                    setResult(200, resutIntent);
+                    finish();
                 }
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
             }
         });
 

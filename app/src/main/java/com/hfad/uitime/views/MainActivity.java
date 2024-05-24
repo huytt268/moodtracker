@@ -155,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //3 hàm copy database từ thư muc assets
+    public static SQLiteDatabase getDatabase() {
+        return database;
+    }
     private void processCopy() {
 //private app
         File dbFile = getDatabasePath(DATABASE_NAME);
@@ -199,8 +202,5 @@ public class MainActivity extends AppCompatActivity {
 // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-    public static SQLiteDatabase getDatabase() {
-        return database;
     }
 }
